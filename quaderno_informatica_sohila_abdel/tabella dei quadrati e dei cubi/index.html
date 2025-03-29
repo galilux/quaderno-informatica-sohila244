@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+ <html lang="it">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Inserisci un numero</title>
+ </head>
+ <body>
+     <h1>Inserisci un numero tra 1 e 10</h1>
+     <form method="POST" action="process.php">
+         <label for="numero">Scegli un numero (1-10):</label>
+         <select id="numero" name="numero" required>
+             <?php
+             // Genera le opzioni del menu a tendina con PHP
+             for ($i = 1; $i <= 10; $i++) {
+                 echo "<option value=\"$i\">$i</option>";
+             }
+             ?>
+         </select>
+         <br><br>
+         <button type="submit">Crea tabella</button>
+     </form>
+ </body>
+ </html>

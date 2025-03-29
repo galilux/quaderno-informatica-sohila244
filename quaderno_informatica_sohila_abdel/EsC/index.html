@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+ <html lang="it">
+ <head>
+     <meta charset="UTF-8">
+     <title>Seleziona un Numero</title>
+     <link rel="stylesheet" href="style.css">
+ </head>
+ <body>
+     <div class="container">
+         <h2>Seleziona un numero</h2>
+         <form method="POST" action="action_page.php">
+             <label for="number">Scegli un numero tra 1 e 10:</label>
+             <select id="number" name="number" required>
+                 <option value="" selected disabled>Seleziona</option>
+                 <!-- Le opzioni saranno generate da PHP -->
+                 <?php for ($i = 1; $i <= 10; $i++) : ?>
+                     <option value="<?= $i; ?>"><?= $i; ?></option>
+                 <?php endfor; ?>
+             </select><br><br>
+             <input type="submit" name="submit" value="Crea tabella">
+         </form>
+     </div>
+ </body>
+ </html>

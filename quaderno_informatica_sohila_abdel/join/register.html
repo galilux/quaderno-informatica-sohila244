@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join</title>
+</head>
+<body>
+    <h1> JOIN</h1>
+    
+
+<h2>Login</h2>
+<form action="JOIN_DB.php" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" name="username" required><br><br>
+    <label for="password">Password:</label>
+    <input type="password" name="password" required><br><br>
+    <input type="submit" value="Accedi">
+</form>
+<br>
+Se non ti ricordi il tuo account:
+<a href="register.php"><button>REGISTRATI</button></a><br><br>
+<a href="Index.html"><button>Torna indietro</button></a>
+<br><br>
+    CREATE TABLE users (<br>
+        id int NOT NULL PRIMARY KEY AUTO_INCREMENT,<br>
+        username varchar(50) NOT NULL,<br>
+        password varchar(255),<br>
+        name varchar(50),<br>
+        surname varchar(50)<br>
+        );<br><br><br>
+
+
+    CREATE TABLE libri (<br>
+        id_libro int NOT NULL PRIMARY KEY AUTO_INCREMENT,<br>
+        titolo varchar(100) NOT NULL,<br>
+        nome_autore varchar(100),<br>
+        prezzo INT(20)<br>
+    );<br><br><br>
+
+<a href="JOIN_DB.php"><button>accedi al DB</button></a>
+</body>
+</html>

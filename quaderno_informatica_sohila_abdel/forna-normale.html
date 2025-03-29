@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prima e Seconda Forma Normale</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-4">
+        <h1 class="text-center">📌 Prima e Seconda Forma Normale (1NF e 2NF)</h1>
+        
+        <section class="mt-4">
+            <h2>1️⃣ Introduzione alla Normalizzazione</h2>
+            <p>La normalizzazione è un processo che aiuta a organizzare un database per ridurre ridondanze e anomalie.</p>
+            <p>Si suddivide in più livelli: 1NF, 2NF, 3NF e oltre.</p>
+        </section>
+
+        <section class="mt-4">
+            <h2>2️⃣ Prima Forma Normale (1NF)</h2>
+            <h4>📌 Definizione</h4>
+            <p>Una tabella è in **Prima Forma Normale (1NF)** se:</p>
+            <ul>
+                <li>✔️ Ha un <b>valore atomico</b> in ogni cella (nessun valore multiplo o elenchi).</li>
+                <li>✔️ Ogni colonna ha un dominio di valori unico.</li>
+                <li>✔️ Ogni riga è identificata da una chiave primaria.</li>
+            </ul>
+
+            <h4>❌ Esempio di tabella <b>NON</b> in 1NF</h4>
+            <pre class="bg-dark text-white p-3 rounded">
+Studenti
+-----------------------------------
+| ID | Nome  | Corsi              |
+-----------------------------------
+| 1  | Luca  | Matematica, Fisica |
+| 2  | Anna  | Inglese, Storia    |
+-----------------------------------
+            </pre>
+            <p>🔴 Il problema: la colonna "Corsi" contiene valori multipli (Matematica, Fisica...)</p>
+
+            <h4>✅ Soluzione: Rendere i dati atomici</h4>
+            <pre class="bg-dark text-white p-3 rounded">
+Studenti
+-------------------------
+| ID | Nome  | Corso    |
+-------------------------
+| 1  | Luca  | Matematica |
+| 1  | Luca  | Fisica     |
+| 2  | Anna  | Inglese    |
+| 2  | Anna  | Storia     |
+-------------------------
+            </pre>
+            <p>Ora ogni cella contiene un solo valore atomico: la tabella è in 1NF!</p>
+        </section>
+
+        <section class="mt-4">
+            <h2>3️⃣ Seconda Forma Normale (2NF)</h2>
+            <h4>📌 Definizione</h4>
+            <p>Una tabella è in **Seconda Forma Normale (2NF)** se:</p>
+            <ul>
+                <li>✔️ È già in **1NF**.</li>
+                <li>✔️ <b>Tutti gli attributi non chiave dipendono dall'intera chiave primaria</b> (nessuna dipendenza parziale).</li>
+            </ul>
+
+            <h4>❌ Esempio di tabella <b>NON</b> in 2NF</h4>
+            <pre class="bg-dark text-white p-3 rounded">
+Iscrizioni
+-------------------------------------------
+| ID_Studente | Corso    | NomeStudente  |
+-------------------------------------------
+| 1          | Matematica | Luca         |
+| 1          | Fisica     | Luca         |
+| 2          | Inglese    | Anna         |
+-------------------------------------------
+            </pre>
+            <p>🔴 Il problema: "NomeStudente" dipende solo da "ID_Studente" e non dall'intera chiave primaria composta ("ID_Studente, Corso").</p>
+
+            <h4>✅ Soluzione: Separare le tabelle</h4>
+            <p>Creiamo due tabelle separate:</p>
+
+            <h5>📌 Tabella <b>Studenti</b></h5>
+            <pre class="bg-dark text-white p-3 rounded">
+Studenti
+-----------------------
+| ID_Studente | Nome  |
+-----------------------
+| 1          | Luca  |
+| 2          | Anna  |
+-----------------------
+            </pre>
+
+            <h5>📌 Tabella <b>Iscrizioni</b></h5>
+            <pre class="bg-dark text-white p-3 rounded">
+Iscrizioni
+-------------------------
+| ID_Studente | Corso    |
+-------------------------
+| 1          | Matematica |
+| 1          | Fisica     |
+| 2          | Inglese    |
+-------------------------
+            </pre>
+            <p>Ora tutte le colonne dipendono dall'intera chiave primaria, e la tabella è in 2NF! 🎯</p>
+        </section>
+
+        <section class="mt-4">
+        
+    </div>
+</body>
+</html>
