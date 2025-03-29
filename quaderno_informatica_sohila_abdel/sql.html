@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teoria SQL e Cardinalità</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-4">
+        <h1 class="text-center">📌 Teoria SQL e Cardinalità nei Database</h1>
+        
+        <section class="mt-4">
+            <h2>1️⃣ Cos’è SQL?</h2>
+            <p>SQL (Structured Query Language) è un linguaggio standard per la gestione e manipolazione dei database relazionali.</p>
+            <ul>
+                <li>✔️ Creazione di database e tabelle (<b>DDL - Data Definition Language</b>)</li>
+                <li>✔️ Inserimento, modifica e cancellazione di dati (<b>DML - Data Manipulation Language</b>)</li>
+                <li>✔️ Controllo degli accessi e permessi (<b>DCL - Data Control Language</b>)</li>
+            </ul>
+        </section>
+
+        <section class="mt-4">
+            <h2>2️⃣ Struttura di un Database Relazionale</h2>
+            <p>Un database relazionale è formato da tabelle che contengono dati organizzati in righe e colonne.</p>
+            <pre class="bg-dark text-white p-3 rounded">
+-- Creazione di una tabella "Studenti"
+CREATE TABLE Studenti (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50),
+    cognome VARCHAR(50),
+    email VARCHAR(100) UNIQUE
+);
+            </pre>
+        </section>
+
+        <section class="mt-4">
+            <h2>3️⃣ Tipi di Query SQL</h2>
+            <h4>📌 Selezione dei dati (SELECT)</h4>
+            <pre class="bg-dark text-white p-3 rounded">
+SELECT * FROM Studenti; -- Seleziona tutti i record
+SELECT nome, cognome FROM Studenti WHERE email LIKE '%gmail.com';
+            </pre>
+
+            <h4>📌 Inserimento di dati (INSERT)</h4>
+            <pre class="bg-dark text-white p-3 rounded">
+INSERT INTO Studenti (nome, cognome, email) 
+VALUES ('Mario', 'Rossi', 'mario.rossi@gmail.com');
+            </pre>
+
+            <h4>📌 Modifica di dati (UPDATE)</h4>
+            <pre class="bg-dark text-white p-3 rounded">
+UPDATE Studenti 
+SET email = 'mario.rossi@yahoo.com' 
+WHERE id = 1;
+            </pre>
+
+            <h4>📌 Eliminazione di dati (DELETE)</h4>
+            <pre class="bg-dark text-white p-3 rounded">
+DELETE FROM Studenti WHERE id = 1;
+            </pre>
+        </section>
+
+        <section class="mt-4">
+            <h2>4️⃣ Relazioni tra Tabelle e Cardinalità</h2>
+            <p>Nei database relazionali, le tabelle sono collegate tramite <b>chiavi primarie</b> e <b>chiavi esterne</b>. La <b>cardinalità</b> descrive il tipo di relazione tra due entità.</p>
+            
+            <h4>📌 Relazioni e Cardinalità</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descrizione</th>
+                        <th>Esempio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>1:1 (Uno a Uno)</b></td>
+                        <td>Un record in una tabella è associato a un solo record in un'altra tabella.</td>
+                        <td>Ogni persona ha un solo passaporto.</td>
+                    </tr>
+                    <tr>
+                        <td><b>1:N (Uno a Molti)</b></td>
+                        <td>Un record in una tabella può essere associato a più record in un'altra tabella.</td>
+                        <td>Un professore può insegnare a più studenti.</td>
+                    </tr>
+                    <tr>
+                        <td><b>N:M (Molti a Molti)</b></td>
+                        <td>Più record in una tabella possono essere collegati a più record in un'altra tabella.</td>
+                        <td>Gli studenti possono iscriversi a più corsi e i corsi possono avere più studenti.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="mt-4">
+            <h2>5️⃣ Esempio di Relazioni in SQL</h2>
+            <p>Relazione tra <b>Studenti</b> e <b>Corsi</b> con una tabella intermedia per gestire la cardinalità N:M.</p>
+            <pre class="bg-dark text-white p-3 rounded">
+-- Creazione della tabella Studenti
+CREATE TABLE Studenti (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50)
+);
+
+-- Creazione della tabella Corsi
+CREATE TABLE Corsi (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50)
+);
+
+-- Creazione della tabella intermedia (Relazione N:M)
+CREATE TABLE Iscrizioni (
+    id_studente INT,
+    id_corso INT,
+    PRIMARY KEY (id_studente, id_corso),
+    FOREIGN KEY (id_studente) REFERENCES Studenti(id),
+    FOREIGN KEY (id_corso) REFERENCES Corsi(id)
+);
+            </pre>
+        </section>
+
+        <section class="mt-4">
+            <h2>6️⃣ Esempi di Query con Cardinalità</h2>
+            <h4>📌 Selezionare i corsi di uno studente</h4>
+            <pre class="bg-dark text-white p-3 rounded">
+SELECT S.nome AS Studente, C.nome AS Corso
+FROM Studenti S
+JOIN Iscrizioni I ON S.id = I.id_studente
+JOIN Corsi C ON I.id_corso = C.id;
+            </pre>
+
+            <h4>📌 Contare il numero di studenti iscritti a ogni corso</h4>
+            <pre class="bg-dark text-white p-3 rounded">
+SELECT C.nome AS Corso, COUNT(I.id_studente) AS Numero_Studenti
+FROM Corsi C
+LEFT JOIN Iscrizioni I ON C.id = I.id_corso
+GROUP BY C.id;
+            </pre>
+        </section>
+
+        <section class="mt-5">
+            <h2>cardinalità</h2>
+            <ul>
+                <li>Deve = 1,n</li>
+                <li> Può = 0,n</li>
+                <li> Ogni = 1,n</li>
+                </ul>
+        </section>
+
+        
+    </div>
+</body>
+</html>
